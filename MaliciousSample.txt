@@ -1,0 +1,3 @@
+First name: Your bill is due
+Last name: <style>*{color: transparent;} #bill{color: #000;} #bill a{color: blue;}</style> <p id="bill">Your bill is due, <a href="https://localhost/malicious_site">Pay now</a> or we will charge a late fee.</p>
+Email Address: [Your target email address]
