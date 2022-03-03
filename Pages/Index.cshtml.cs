@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -19,19 +20,22 @@ public class IndexModel : PageModel
     {
     }
 
-    public async Task<IActionResult> OnPostAsync([FromServices] EmailSender emailSender)
+    public async Task<IActionResult> OnPostAsync(
+        [FromServices] EmailSender emailSender,
+        [FromServices] HtmlEncoder htmlEncoder
+    )
     {
         if (!ModelState.IsValid)
         {
             return Page();
         }
 
-        var firstName = SignUpForm.FirstName;
-        var lastName = SignUpForm.LastName;
+        var firstName = htmlEncoder.Encode(SignUpForm.FirstName);
+        var lastName = htmlEncoder.Encode(SignUpForm.LastName);
         var emailAddress = SignUpForm.EmailAddress;
 
         var subject = $"{firstName}, confirm your newsletter subscription";
-        var htmlBody = 
+        var htmlBody =
             $"Hi {firstName} {lastName}, <br />" +
             "Thank you for signing up for our newsletter. Please click the link below to confirm your subscription. <br />" +
             "<a href=\"https://localhost/confirm?token=???\">Confirm your subscription</a>";
